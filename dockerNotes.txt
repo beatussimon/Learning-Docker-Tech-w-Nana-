@@ -1,0 +1,105 @@
+A container is way to package your application with all the neccesary dependencies and configuration
+
+-> Portable artifact, easly shared and moved around
+=> The packaging makes the whike development and deployment more efficient
+
+=> Containers live in a container repository, this is a special storage place for containers
+=> You can keep the docker repositories in a  local repo or the public repositories for docker
+
+
+The container is its own operating system isolated  layer
+Everything is packaged in its own isolated environment
+
+So inside the container for instance for postgres you have configuration, start script and the postgres image all packaged inside the container 
+
+Reardless of the system you are using they are all going to use the same docker commands this makes setting up the development envronment for your stack mote easier and efficient 
+
+You can have two different versions of your app running locally without confkicts
+
+How they improve the deployment process:
+
+The development team will give the code or app and the setup to the development team the issue with this is you need to configure and install eveything on the server, this can easly resilt to dependency conflicts and any misunderstandings between teams can easly result into problems forgetting and misinterpretation can result to problems bt with containers since theyare encapsulated eith in the single environment and no configuration ins needed on the server everything is simplified
+
+A docker image is a a layer of images and at the bottom is a linux base image which is very smaller in size =>>Alpine and at the top we have the application image
+
+to get the image you want you can type docker pull image:version and you can directly run the image and the docker knoews to find the image in docker hub if it doesnt find it on your machine
+
+and during installation/pulling the image you can see the different hashes of different images being downloaded and this proves that different layers are being downloaded 
+
+if upsates occur the advantage is that the different or updated dependencincy layers to what is dowmloaded will be downloaded
+
+Docker image 						Docker container
+is the actual package	the artifact that		Whn you pull the image and 
+is movable around					actually start it then that 							application is running inside t							the container, the container env is 							created
+
+
+==> not running then its and imagem running in my machine its a container
+
+=> if you pull the same applicaion but different version man layers will show up as exists and wont have to be pulled
+
+Docker vs virtual machine
+Dockr on OS level:
+os kernel and applocations layer are two layers that makes up an os
+Note: both docker and vms are vitualization tools
+
+Docker virtualizes the application layer and it uses the kernel of the host because it doesnt have its own kernel
+
+The vms virtualizes the entire os => the applocation and kernel layer, if you download vm image it uses its own image
+
+size; docker smaller couple of mbs while vm image is in couple of gbs
+
+speed: docker containers are much faster (starting and running) as opposed to vms which have to boot the kernel and the applications on top of it
+
+compatibility: Vms of any any host can run on any host of any os
+
+
+Container is the running env for the image
+container has a port that is binded to it and makes it possible to talk to the application
+
+In container the file system is vitual 
+
+commands:
+
+==> docker images -> lists the available docker images
+each image that you have will have a speciefic version and if you dont specify when pulling up the latest image vesion will be pulled
+
+docke ps => lists the running containers
+
+docker run image_name => this will run the image specified
+
+-d option make ip possible to run docker in detached mode
+
+you can stop and start the docker container of the specified id
+
+docker ps -a shows the containers that are running and the ones not running
+
+
+IF you docker ps one of the options listed is ports the container is litsening to THE INCOMING REQUESTS	
+
+Container port vs host port 
+Cant open two containers on the same port
+
+To make your port reachable outside the container you have to bind the port number of of your container to your machine
+
+command: docker run -p6000:6379 redis 
+
+
+COMMANDS FOR TROUBLESHOOOTING:
+docker logs container_id ==> shows the logs produced bu the specified container
+
+You can provide either the container_id or the container_name
+
+you can start the image with a different name using the following command:
+$ docker run -p6001:6379 -d --name oldredis redis:4.33
+
+docker exec => get the terminal of the running container
+command: docker exec -it (for interactive terminal) container_id /bin/bash
+
+you can check tha env variavles by typing .env to exit just type exit and instead of using the container id you can use the container name
+
+
+docker run => creaes a new container from the image
+
+docker start is used to start the existing containers and retains all the info used to create the container 
+
+=> To conclude docker run is user to start ner containers while docker start is used to  restart the existing containers
